@@ -14,7 +14,8 @@ const games = [
     genre: "Tactical Shooter",
     console: "PC",
     year: "2019",
-    description: "A 3rd person military tactical shoot set in a destroyed Washington DC where you fight off various factions from taking over the city"
+    description: "A 3rd person military tactical shoot set in a destroyed Washington DC where you fight off various factions from taking over the city",
+    datePassed: "7/11/2022" 
   },
 
   {
@@ -24,7 +25,8 @@ const games = [
     genre: "Adventure/Survival",
     console: "PC",
     year: "2018",
-    description: "A survival space adventure where the players explores and colonies planets in endless solar systems in the Milky Way Galaxy."
+    description: "A survival space adventure where the players explores and colonies planets in endless solar systems in the Milky Way Galaxy.",
+    datePassed: "4/25/2021"
   },
 
   {
@@ -34,7 +36,8 @@ const games = [
     genre: "RPG",
     console: "PC",
     year: "2020",
-    description: "A RPG which the player plays as V in a cyberpunk setting doing missions in Night City."
+    description: "A RPG which the player plays as V in a cyberpunk setting doing missions in Night City.",
+    datePassed: "2/15/2022"
   },
 
 ]
@@ -73,7 +76,7 @@ app.post('/api/games', (req, res) => {
   
   //400 bad request
  
-    //res.status(400).send("A game title, image, genre, console, year, *or* description must be inputed.")  
+    //res.status(400).send("A game title, image, genre, console, year, *or* description, date passed must be inputed.")  
      //so to not execute the rest of the function
   //}
 
@@ -84,7 +87,8 @@ app.post('/api/games', (req, res) => {
     genre: req.body.genre, //select box
     console: req.body.console,  //radio buttons
     year: req.body.year, //input
-    description: req.body.description // text area
+    description: req.body.description, // text area
+    datePassed: req.body.datePassed
   }
   games.push(game)
   console.log("A new game has been passed!")
@@ -114,7 +118,8 @@ app.put('/api/games/:id', (req, res) => {
   game.genre = req.body.genre,
   game.console = req.body.console,
   game.year = req.body.year,
-  game.description = req.body.description
+  game.description = req.body.description,
+  game.datePassed = req.body.datePassed
   
   console.log("The game has been updated.")
   res.send(game)
@@ -148,7 +153,8 @@ function validateGame(game) {
     genre: Joi.string().min(3).required(),
     console: Joi.string().min(2).required(),
     year: Joi.string().min(4).required(),
-    description: Joi.string().min(10).required()
+    description: Joi.string().min(10).required(),
+    datePassed: Joi.string().min(6).required()
   })
   
   return schema.validate(game)
