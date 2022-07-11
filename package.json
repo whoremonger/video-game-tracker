@@ -1,0 +1,17 @@
+{
+  "name": "video-games",
+  "version": "1.0.0",
+  "description": "Displays a list of video games and its data.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon server.js"
+  },
+  "author": "Jarrad Lovelace",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.1",
+    "joi": "^17.6.0",
+    "nodemon": "^2.0.19"
+  }
+}
