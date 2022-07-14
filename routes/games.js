@@ -145,7 +145,7 @@ function validateGame(game) {
   return schema.validate(game)
 }
 
-module.exports = router
+module.exports =  router
 
 ///show all video game data (get) for a few games (sample data )
 //title, image, console, year made, genre, description, price (maybe add years old ) for the  model/schema
