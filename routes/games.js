@@ -1,12 +1,13 @@
 const { Router } = require('express')
 const Joi = require('joi')
 const router = Router()
-
+//22:50  render the data from rating system, reviews, ratings
+//then make sure error pages are rendered
 const games = [
   { 
     id: 1,
     title: "The Division 2",
-    image: "images/theDivision2.jpg",
+    image: "../theDivision2.jpg",
     genre: "Tactical Shooter",
     console: "PC",
     year: "2019",
@@ -17,7 +18,7 @@ const games = [
   {
     id: 2,
     title: "No Man's Sky",
-    image: "images/noMansSky.jpg",
+    image: "../noMansSky.jpg",
     genre: "Adventure/Survival",
     console: "PC",
     year: "2018",
@@ -28,26 +29,26 @@ const games = [
   {
     id: 3,
     title: "Cyberpunk 2077",
-    image: "images/cyberpunk_2077.jpg",
+    image: "../cyberpunk_2077.jpg",
     genre: "RPG",
     console: "PC",
     year: "2020",
     description: "A RPG which the player plays as V in a cyberpunk setting doing missions in Night City.",
     datePassed: "2/15/2022"
-  },
+  }
 ]
 
 
 //full list of games
 router.get('/', (req, res) => {
-  res.send(games)
+ res.render('games', { games })//need to enter data
 })
 
 //show 1 game
 router.get('/:id', (req, res) => {
  const game = games.find(g => g.id === parseInt(req.params.id))
  if(!game) { //not found 404
-  return res.status(404).send(`The game of ID of ${req.params.id} was not found.`)
+  return res.status(404).send(`The game of ID of ${req.params.id} was not found.`).render('404')//will use 404 page
  }
  res.send(game)
 })
@@ -56,11 +57,11 @@ router.get('/:id', (req, res) => {
 //create game
 //also validate for any spaces
 //use joi for data validation
-router.post('/', (req, res) => {
+router.post('/', (req, res) => { //use newGame page
   const result = validateGame(req.body)
   const { error } = validateGame(req.body) //result.error destructuring
   if(error) {
-    return res.status(400).send(result.error.details[0].message)
+    return res.status(400).send(result.error.details[0].message) //400 page
     
   }
   console.log(result)
@@ -84,7 +85,7 @@ router.post('/', (req, res) => {
   }
   games.push(game)
   console.log("A new game has been passed!")
-  res.send(game)
+  res.send(game).render('newGame')  //and redirect to index
 })
 
 router.put('/:id', (req, res) => {
@@ -115,7 +116,6 @@ router.put('/:id', (req, res) => {
   
   console.log("The game has been updated.")
   res.send(game)
-
 })
 
 router.delete('/:id', (req, res) => {
@@ -127,6 +127,7 @@ router.delete('/:id', (req, res) => {
   //delete
   const index = games.indexOf(game)
   games.splice(index, 1)
+  console.log("The game has been deleted!")
   res.send(game) 
 })
 

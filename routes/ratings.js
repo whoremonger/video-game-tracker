@@ -33,7 +33,7 @@ const ratingSystem = [
 ]
 
 router.get('/', (req, res) => {
-  res.send(ratingSystem)
+  res.render('ratingSystem').send(ratingSystem)
 })
 
 module.exports = router

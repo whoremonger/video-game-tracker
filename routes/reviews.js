@@ -71,6 +71,37 @@ router.post('/', (req, res) => {
   res.send(review)
 })
 
+router.put('/:reviewId', (req, res) => {
+  const review = reviews.find(g => g.reviewId === parseInt(req.params.reviewId))
+  if(!review) { //not found 404
+    return res.status(404).send(`The game of ID of ${req.params.reviewId} was not found.`) 
+  }
+
+  const result = validateReview(req.body)
+  const { error } = validateReview(req.body) //result.error destructuring
+  if(error) {
+    return res.status(400).send(result.error.details[0].message) 
+  }
+
+  review.review = req.body.review,
+  review.rating = req.body.rating
+  console.log("The review or rating has been edited.")
+  res.send(review)
+})
+
+router.delete('/:reviewId', (req, res) => {
+  const review = reviews.find(g => g.reviewId === parseInt(req.params.reviewId))
+  if(!review) { //not found 404
+    return res.status(404).send(`The game of ID of ${req.params.reviewId} was not found.`)
+  }
+  const index = reviews.indexOf(review)
+  reviews.splice(index, 1)
+  console.log("the review has been deleted.")
+  res.send(review) 
+})
+
+
+
 function validateReview(review) {
   const schema = Joi.object({
     review: Joi.string().min(30).required(),
